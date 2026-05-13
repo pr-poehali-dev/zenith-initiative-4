@@ -194,9 +194,17 @@ export default function Dashboard() {
                 {topupMethod === "sbp" ? (
                   <div className="space-y-2">
                     <p className="text-xs text-gray-400 mb-2">Переведите <span className="text-white font-semibold">{topupAmount || "..."}₽</span> по СБП:</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">Номер карты</span>
-                      <span className="text-sm font-mono font-medium text-white tracking-wider">{SBP_PHONE}</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs text-gray-500 shrink-0">Номер карты</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-mono font-medium text-white tracking-wider">{SBP_PHONE}</span>
+                        <button
+                          onClick={() => { navigator.clipboard.writeText(SBP_PHONE); toast({ title: "Номер карты скопирован!" }) }}
+                          className="text-gray-500 hover:text-violet-400 transition-colors"
+                        >
+                          <Icon name="Copy" size={13} />
+                        </button>
+                      </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Банк</span>
@@ -210,9 +218,17 @@ export default function Dashboard() {
                 ) : (
                   <div className="space-y-2">
                     <p className="text-xs text-gray-400 mb-2">Отправьте <span className="text-white font-semibold">{topupAmount || "..."}₽</span> в TON:</p>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs text-gray-500 shrink-0">Кошелёк</span>
-                      <span className="text-xs font-mono text-blue-300 break-all">{TON_WALLET}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-xs text-gray-500 shrink-0 mt-0.5">Кошелёк</span>
+                      <div className="flex items-start gap-2">
+                        <span className="text-xs font-mono text-blue-300 break-all">{TON_WALLET}</span>
+                        <button
+                          onClick={() => { navigator.clipboard.writeText(TON_WALLET); toast({ title: "Адрес кошелька скопирован!" }) }}
+                          className="text-gray-500 hover:text-violet-400 transition-colors shrink-0"
+                        >
+                          <Icon name="Copy" size={13} />
+                        </button>
+                      </div>
                     </div>
                     <p className="text-xs text-amber-400 mt-2 flex items-start gap-1">
                       <Icon name="AlertCircle" size={12} className="mt-0.5 shrink-0" />
