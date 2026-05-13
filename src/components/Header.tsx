@@ -5,27 +5,27 @@ export function Header() {
   return (
     <header className="flex items-center justify-between px-8 py-4">
       <div className="flex items-center gap-2">
-        <ФинПотокLogo />
+        <FastIssuanceLogo />
         <span className="text-lg font-semibold text-white">
-          ФинПоток<sup className="text-xs">™</sup>
+          Fast Issuance<sup className="text-xs">™</sup>
         </span>
       </div>
 
       <nav className="hidden md:flex items-center gap-8">
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Продукты
+          Products
         </a>
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-1">
-          Решения <ChevronDown className="h-4 w-4" />
+          Solutions <ChevronDown className="h-4 w-4" />
         </a>
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Ресурсы
+          Resources
         </a>
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Тарифы
+          Pricing
         </a>
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Контакты
+          Contact
         </a>
       </nav>
 
@@ -33,19 +33,19 @@ export function Header() {
         variant="outline"
         className="rounded-full border-violet-500 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 bg-transparent"
       >
-        Запросить демо
+        Request a Demo
       </Button>
     </header>
   )
 }
 
-function ФинПотокLogo() {
+function FastIssuanceLogo() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="8" cy="8" r="3" fill="#8B5CF6" />
-      <circle cx="16" cy="8" r="3" fill="#8B5CF6" opacity="0.6" />
-      <circle cx="8" cy="16" r="3" fill="#8B5CF6" opacity="0.6" />
-      <circle cx="16" cy="16" r="3" fill="#8B5CF6" opacity="0.4" />
+      <rect x="3" y="3" width="8" height="8" rx="2" fill="#8B5CF6" />
+      <rect x="13" y="3" width="8" height="8" rx="2" fill="#8B5CF6" opacity="0.6" />
+      <rect x="3" y="13" width="8" height="8" rx="2" fill="#8B5CF6" opacity="0.4" />
+      <rect x="13" y="13" width="8" height="8" rx="2" fill="#8B5CF6" opacity="0.2" />
     </svg>
   )
 }

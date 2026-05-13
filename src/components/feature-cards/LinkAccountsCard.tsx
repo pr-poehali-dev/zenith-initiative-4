@@ -2,11 +2,11 @@ import { Building2, ArrowUpRight, Plus } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 
-const recipients = [
-  { name: "Алексей Петров", info: "alexey@finpotok.ru", code: "P-52112", image: "/professional-man-portrait.png" },
-  { name: "Мария Иванова", info: "+7 (495) 123-45-67", code: "P-52132", image: "/professional-woman-portrait.png" },
-  { name: "Елена Смирнова", info: "elena@finpotok.ru", code: "P-52184", initials: "ЕС", color: "bg-teal-600" },
-  { name: "Дмитрий Козлов", info: "+7 (812) 987-65-43", code: "P-52114", initials: "ДК", color: "bg-amber-600" },
+const issuances = [
+  { name: "Alex Morgan", info: "alex@novapay.io", code: "ISS-1042", image: "/professional-man-portrait.png" },
+  { name: "Sarah Chen", info: "+1 (415) 555-0198", code: "ISS-1078", image: "/professional-woman-portrait.png" },
+  { name: "Elena Russo", info: "e.russo@clearfin.com", code: "ISS-1091", initials: "ER", color: "bg-teal-600" },
+  { name: "David Kim", info: "+44 20 7946 0321", code: "ISS-1103", initials: "DK", color: "bg-amber-600" },
 ]
 
 export function LinkAccountsCard() {
@@ -16,35 +16,35 @@ export function LinkAccountsCard() {
         <Building2 className="h-5 w-5 text-gray-400" />
       </div>
 
-      <h3 className="mb-2 text-lg font-semibold text-white">Объедините все счета</h3>
-      <p className="mb-4 text-sm text-gray-400">Подключите банки, кошельки и карты, чтобы видеть все балансы в одном окне</p>
+      <h3 className="mb-2 text-lg font-semibold text-white">Link All Accounts</h3>
+      <p className="mb-4 text-sm text-gray-400">Connect banks, wallets, and cards — see every balance and issued instrument in one place</p>
 
       <a href="#" className="mb-6 inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors">
-        Подробнее <ArrowUpRight className="ml-1 h-4 w-4" />
+        Learn more <ArrowUpRight className="ml-1 h-4 w-4" />
       </a>
 
       <div className="mt-auto space-y-2 rounded-xl bg-[#1a1a1a] border border-[#262626] p-3">
-        {recipients.map((recipient, index) => (
+        {issuances.map((item, index) => (
           <div key={index} className="flex items-center justify-between rounded-lg bg-[#0f0f0f] px-3 py-2">
             <div className="flex items-center gap-3">
               <Avatar className="h-9 w-9">
-                {recipient.image ? (
-                  <AvatarImage src={recipient.image || "/placeholder.svg"} alt={recipient.name} />
+                {item.image ? (
+                  <AvatarImage src={item.image || "/placeholder.svg"} alt={item.name} />
                 ) : null}
-                <AvatarFallback className={`${recipient.color || "bg-gray-600"} text-white text-xs`}>
-                  {recipient.initials ||
-                    recipient.name
+                <AvatarFallback className={`${item.color || "bg-gray-600"} text-white text-xs`}>
+                  {item.initials ||
+                    item.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium text-white">{recipient.name}</p>
-                <p className="text-xs text-gray-500">{recipient.info}</p>
+                <p className="text-sm font-medium text-white">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.info}</p>
               </div>
             </div>
-            <span className="text-xs text-gray-500">{recipient.code}</span>
+            <span className="text-xs text-gray-500">{item.code}</span>
           </div>
         ))}
 
@@ -52,7 +52,7 @@ export function LinkAccountsCard() {
           variant="ghost"
           className="w-full justify-center text-gray-500 hover:text-white hover:bg-[#1f1f1f] mt-2"
         >
-          <Plus className="mr-2 h-4 w-4" /> Новый получатель
+          <Plus className="mr-2 h-4 w-4" /> New Issuance
         </Button>
       </div>
     </div>
