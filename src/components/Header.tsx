@@ -1,10 +1,16 @@
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
+import { loadUser } from "@/lib/userStore"
+import Icon from "@/components/ui/icon"
 
 export function Header() {
+  const navigate = useNavigate()
+  const user = loadUser()
+
   return (
     <header className="flex items-center justify-between px-8 py-4">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
         <FastIssuanceLogo />
         <span className="text-lg font-semibold text-white">
           Fast Issuance<sup className="text-xs">™</sup>
@@ -12,29 +18,53 @@ export function Header() {
       </div>
 
       <nav className="hidden md:flex items-center gap-8">
-        <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
+        <a href="#catalog" className="text-sm text-gray-300 hover:text-white transition-colors">
           Products
         </a>
         <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-1">
           Solutions <ChevronDown className="h-4 w-4" />
         </a>
-        <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Resources
+        <a href="#reviews" className="text-sm text-gray-300 hover:text-white transition-colors">
+          Reviews
         </a>
-        <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
+        <a href="#shop" className="text-sm text-gray-300 hover:text-white transition-colors">
           Pricing
         </a>
-        <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">
-          Contact
-        </a>
+        <button
+          onClick={() => navigate("/store")}
+          className="text-sm text-gray-300 hover:text-white transition-colors"
+        >
+          Game Store
+        </button>
       </nav>
 
-      <Button
-        variant="outline"
-        className="rounded-full border-violet-500 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 bg-transparent"
-      >
-        Request a Demo
-      </Button>
+      <div className="flex items-center gap-2">
+        {user ? (
+          <>
+            <div
+              onClick={() => navigate("/dashboard")}
+              className="flex items-center gap-2 rounded-full bg-[#1a1a1a] border border-[#262626] px-3 py-1.5 cursor-pointer hover:border-violet-500/50 transition-colors"
+            >
+              <Icon name="Wallet" size={13} className="text-violet-400" />
+              <span className="text-sm font-medium text-white">{user.balance.toFixed(2)}₽</span>
+            </div>
+            <Button
+              onClick={() => navigate("/dashboard")}
+              className="rounded-full bg-violet-600 hover:bg-violet-700 text-white text-sm px-4"
+            >
+              Кабинет
+            </Button>
+          </>
+        ) : (
+          <Button
+            onClick={() => navigate("/login")}
+            variant="outline"
+            className="rounded-full border-violet-500 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 bg-transparent"
+          >
+            Войти
+          </Button>
+        )}
+      </div>
     </header>
   )
 }

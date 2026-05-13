@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Register new user",
+      "method": "POST",
+      "path": "/",
+      "body": {"action": "register", "username": "testuser_fi", "password": "test1234"},
+      "expectedStatus": 200,
+      "expectedBody": {"username": "string"},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
