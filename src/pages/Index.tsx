@@ -8,7 +8,7 @@ import { ShopSection } from "@/components/ShopSection"
 import Icon from "@/components/ui/icon"
 
 const socials = [
-  { label: "Telegram", icon: "Send", href: "#" },
+  { label: "Telegram", icon: "Send", href: "https://t.me/svkwo1" },
   { label: "VKontakte", icon: "Users", href: "#" },
 ]
 
