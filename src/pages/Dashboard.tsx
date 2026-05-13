@@ -8,6 +8,13 @@ import { useToast } from "@/hooks/use-toast"
 
 const WITHDRAW_METHODS = ["СБП", "Сбер", "TON", "USDT"]
 
+const TOPUP_METHODS = [
+  { id: "sbp", label: "СБП", icon: "Zap", desc: "Перевод по номеру телефона", color: "text-green-400" },
+  { id: "ton", label: "TON", icon: "Diamond", desc: "Криптовалюта TON / USDT", color: "text-blue-400" },
+]
+
+const TOPUP_AMOUNTS = [50, 100, 200, 500, 1000]
+
 export default function Dashboard() {
   const navigate = useNavigate()
   const { toast } = useToast()
@@ -21,6 +28,10 @@ export default function Dashboard() {
   const [withdrawAmount, setWithdrawAmount] = useState("")
   const [withdrawMethod, setWithdrawMethod] = useState("СБП")
   const [withdrawing, setWithdrawing] = useState(false)
+
+  const [topupOpen, setTopupOpen] = useState(false)
+  const [topupMethod, setTopupMethod] = useState("sbp")
+  const [topupAmount, setTopupAmount] = useState("100")
 
   useEffect(() => {
     const u = loadUser()
@@ -73,6 +84,10 @@ export default function Dashboard() {
   const commission = parseFloat(withdrawAmount) ? Math.round(parseFloat(withdrawAmount) * 0.03 * 100) / 100 : 0
   const received = parseFloat(withdrawAmount) ? Math.round((parseFloat(withdrawAmount) - commission) * 100) / 100 : 0
 
+  const SBP_PHONE = "+7 (999) 000-00-00"
+  const SBP_BANK = "Сбербанк"
+  const TON_WALLET = "UQD...your_ton_wallet"
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <header className="flex items-center justify-between px-6 py-4 border-b border-[#1a1a1a]">
@@ -97,12 +112,18 @@ export default function Dashboard() {
           <p className="text-5xl font-bold text-white mb-4">
             {loading ? "..." : `${balance.toFixed(2)}₽`}
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => navigate("/store")}
               className="flex items-center gap-2 rounded-full bg-violet-600 hover:bg-violet-700 transition-colors px-4 py-2 text-sm font-medium text-white"
             >
               <Icon name="ShoppingCart" size={14} /> Магазин игр
+            </button>
+            <button
+              onClick={() => setTopupOpen(true)}
+              className="flex items-center gap-2 rounded-full bg-green-600/20 hover:bg-green-600/30 border border-green-500/40 transition-colors px-4 py-2 text-sm font-medium text-green-300"
+            >
+              <Icon name="Plus" size={14} /> Пополнить
             </button>
             <button
               onClick={() => setTab("withdrawals")}
@@ -112,6 +133,106 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
+
+        {/* Топап модал */}
+        {topupOpen && (
+          <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center px-4" onClick={() => setTopupOpen(false)}>
+            <div className="w-full max-w-sm rounded-2xl bg-[#141414] border border-[#262626] p-6" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                  <Icon name="Plus" size={16} className="text-green-400" /> Пополнение баланса
+                </h3>
+                <button onClick={() => setTopupOpen(false)} className="text-gray-500 hover:text-white transition-colors">
+                  <Icon name="X" size={18} />
+                </button>
+              </div>
+
+              {/* Способ */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {TOPUP_METHODS.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setTopupMethod(m.id)}
+                    className={`rounded-xl p-3 text-left border transition-colors ${topupMethod === m.id ? "bg-violet-600/20 border-violet-500" : "bg-[#0f0f0f] border-[#262626] hover:border-gray-500"}`}
+                  >
+                    <Icon name={m.icon} size={18} className={`${m.color} mb-1`} />
+                    <p className="text-sm font-semibold text-white">{m.label}</p>
+                    <p className="text-xs text-gray-500">{m.desc}</p>
+                  </button>
+                ))}
+              </div>
+
+              {/* Сумма */}
+              <div className="mb-4">
+                <label className="text-xs text-gray-400 mb-2 block">Сумма пополнения (₽)</label>
+                <div className="grid grid-cols-5 gap-1.5 mb-2">
+                  {TOPUP_AMOUNTS.map((a) => (
+                    <button
+                      key={a}
+                      onClick={() => setTopupAmount(String(a))}
+                      className={`rounded-lg py-1.5 text-xs font-medium transition-colors border ${topupAmount === String(a) ? "bg-violet-600/20 border-violet-500 text-violet-300" : "bg-[#0f0f0f] border-[#262626] text-gray-400 hover:border-gray-500"}`}
+                    >
+                      {a}₽
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center rounded-lg bg-[#0f0f0f] border border-[#262626] px-3 py-2.5">
+                  <span className="text-gray-500 mr-2 text-sm">₽</span>
+                  <input
+                    type="number"
+                    min="10"
+                    placeholder="Своя сумма"
+                    value={topupAmount}
+                    onChange={(e) => setTopupAmount(e.target.value)}
+                    className="flex-1 bg-transparent text-white placeholder-gray-600 outline-none text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Реквизиты */}
+              <div className="rounded-xl bg-[#0f0f0f] border border-[#262626] p-4 mb-4">
+                {topupMethod === "sbp" ? (
+                  <div className="space-y-2">
+                    <p className="text-xs text-gray-400 mb-2">Переведите <span className="text-white font-semibold">{topupAmount || "..."}₽</span> по СБП:</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">Номер телефона</span>
+                      <span className="text-sm font-mono font-medium text-white">{SBP_PHONE}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">Банк</span>
+                      <span className="text-sm font-medium text-white">{SBP_BANK}</span>
+                    </div>
+                    <p className="text-xs text-amber-400 mt-2 flex items-start gap-1">
+                      <Icon name="AlertCircle" size={12} className="mt-0.5 shrink-0" />
+                      В комментарии укажите ваш логин: <strong className="ml-1">@{user?.username}</strong>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-xs text-gray-400 mb-2">Отправьте <span className="text-white font-semibold">{topupAmount || "..."}₽</span> в TON:</p>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs text-gray-500 shrink-0">Кошелёк</span>
+                      <span className="text-xs font-mono text-blue-300 break-all">{TON_WALLET}</span>
+                    </div>
+                    <p className="text-xs text-amber-400 mt-2 flex items-start gap-1">
+                      <Icon name="AlertCircle" size={12} className="mt-0.5 shrink-0" />
+                      В комментарии укажите ваш логин: <strong className="ml-1">@{user?.username}</strong>
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <p className="text-xs text-gray-500 text-center mb-3">После оплаты баланс будет пополнен вручную в течение 15 минут</p>
+
+              <Button
+                onClick={() => { setTopupOpen(false); toast({ title: "Реквизиты скопированы! Ждём ваш платёж." }) }}
+                className="w-full rounded-full bg-green-600 hover:bg-green-700 text-white"
+              >
+                Я оплатил(а)
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Withdraw Form */}
         <div className="rounded-2xl bg-[#141414] border border-[#262626] p-6">
