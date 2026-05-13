@@ -84,9 +84,9 @@ export default function Dashboard() {
   const commission = parseFloat(withdrawAmount) ? Math.round(parseFloat(withdrawAmount) * 0.03 * 100) / 100 : 0
   const received = parseFloat(withdrawAmount) ? Math.round((parseFloat(withdrawAmount) - commission) * 100) / 100 : 0
 
-  const SBP_PHONE = "+7 (999) 000-00-00"
+  const SBP_PHONE = "2202208213225056"
   const SBP_BANK = "Сбербанк"
-  const TON_WALLET = "UQD...your_ton_wallet"
+  const TON_WALLET = "UQBJVBcYqUsMQh0SMBFjUbTV0cSLV0j5awlDGqX8CWlv_BRO"
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
@@ -195,8 +195,8 @@ export default function Dashboard() {
                   <div className="space-y-2">
                     <p className="text-xs text-gray-400 mb-2">Переведите <span className="text-white font-semibold">{topupAmount || "..."}₽</span> по СБП:</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">Номер телефона</span>
-                      <span className="text-sm font-mono font-medium text-white">{SBP_PHONE}</span>
+                      <span className="text-xs text-gray-500">Номер карты</span>
+                      <span className="text-sm font-mono font-medium text-white tracking-wider">{SBP_PHONE}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Банк</span>
