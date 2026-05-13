@@ -16,13 +16,21 @@ export function HeroSection() {
 
       <p className="mb-8 max-w-xl text-gray-400">From virtual cards to full account provisioning — Fast Issuance delivers the infrastructure to launch payment products at speed.</p>
 
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center gap-4 mb-12">
         <Button className="rounded-full bg-violet-600 px-6 hover:bg-violet-700 text-white">
           Get Started <ArrowUpRight className="ml-2 h-4 w-4" />
         </Button>
         <Button variant="outline" className="rounded-full border-gray-700 bg-transparent text-white hover:bg-gray-800">
           <Play className="mr-2 h-4 w-4 fill-violet-500 text-violet-500" /> Watch Overview
         </Button>
+      </div>
+
+      <div className="w-full max-w-5xl mx-auto rounded-2xl overflow-hidden border border-[#262626] shadow-2xl shadow-violet-900/20">
+        <img
+          src="https://cdn.poehali.dev/projects/6ada34e2-c0cb-4be4-82fc-60fd83fc670b/files/df2eedf2-bb4f-4ab5-8a55-d1d5e02d6086.jpg"
+          alt="Fast Issuance Platform"
+          className="w-full object-cover"
+        />
       </div>
     </section>
   )
